@@ -3,6 +3,7 @@ import com.photo.entity.User;
 import com.photo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -15,36 +16,37 @@ import org.springframework.validation.Validator;
  */
 
 @Component
-public class UserValidator implements Validator {
+public class UserValidator {
 
     @Autowired
     private UserService userService;
 
-    @Override
-    public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
-    }
-
-    @Override
-    public void validate(Object o, Errors errors) {
+    public Boolean validate(Object o, Model model) {
         User user = (User) o;
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Required");
+        boolean flag = true;
         if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+            model.addAttribute("username", "Имя пользователя должно быть от 4 до 32 символов.");
+            flag = false;
         }
 
         if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            model.addAttribute("username", "Имя пользователя уже существует");
+            flag = false;
+        }
+        if (userService.findByEmail(user.getEmail()) != null) {
+            model.addAttribute("email", "Email уже существует");
+            flag = false;
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
         if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+            model.addAttribute("password", "Пароль должен содержать более 4 символов.");
+            flag = false;
         }
 
         if (!user.getConfirmPassword().equals(user.getPassword())) {
-            errors.rejectValue("confirmPassword", "Different.userForm.password");
+            model.addAttribute("confirmPassword", "Пароли должны совпадать.");
+            flag = false;
         }
+        return flag;
     }
 }

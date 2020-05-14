@@ -55,8 +55,8 @@ table {
 .userInput {
     font-size: 12pt;
     text-align: right;
-    margin-top: -13px;
-    margin-right: 110px;
+    font-family: arial; /*меняем шрифт*/
+    margin-right: 1px;
 }
 
 #error {

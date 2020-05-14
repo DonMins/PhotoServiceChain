@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -38,15 +39,12 @@ public class UserController {
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) throws UnsupportedEncodingException {
-        userValidator.validate(userForm, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "registration";
+    public String registration(@ModelAttribute("userForm") User userForm, Model model) throws UnsupportedEncodingException {
+        if (!userValidator.validate(userForm, model)) {
+            model.addAttribute("errorReg", "Ошибка регистрации");
+            return "start";
         }
         userService.save(userForm);
-
-        securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
-
         return "redirect:/start";
     }
 

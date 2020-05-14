@@ -3573,9 +3573,9 @@ $.widget("ui.dialog", {
 		height: "auto",
 		maxHeight: false,
 		maxWidth: false,
-		minHeight: 150,
-		minWidth: 150,
-		modal: false,
+		minHeight: 300,
+		minWidth: 300,
+		modal: true,
 		position: {
 			my: "center",
 			at: "center",
@@ -3589,7 +3589,7 @@ $.widget("ui.dialog", {
 				}
 			}
 		},
-		resizable: true,
+		resizable: false,
 		show: null,
 		stack: true,
 		title: "",

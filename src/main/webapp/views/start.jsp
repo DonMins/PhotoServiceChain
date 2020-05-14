@@ -17,22 +17,28 @@
     <link href="${contextPath}/resources/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css" />
     <script src="${contextPath}/resources/js/jquery-1.8.3.js" type="text/javascript"></script>
     <script src="${contextPath}/resources/js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
-    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 
 
 <script>
     $(function () {
         $("#dialog").dialog({
-            autoOpen: false
+            autoOpen: false,
+            modal: true,
+            minHeight: 300,
+            minWidth: 300,
+            resizable:false,
+            draggable: false,
+
         });
         $("#openD").click(function () {
             $("#dialog").dialog("open");
         });
+
     });
 </script>
 </head>
 
-<body>
+<body onload= openDialog(${error.length()})>
 <%--<ul>--%>
 <%--    --%>
 <%--    <li><button id ="inwork" onclick="MessageBox()" >О Компании</button></li>--%>
@@ -53,29 +59,45 @@
 <%--</ul>--%>
 
 <ul class="ul-class">
-    <li><a href="#">Главная</a></li>
-    <li><a href="#" >Услуги</a>
+    <li><a class="a-class" href="#">Главная</a></li>
+    <li><a class="a-class" href="#" >Услуги</a>
         <ul class="ul-class">
-            <li><a href="#" style="font-size: medium">Печать фотографий</a></li>
-            <li><a href="#" style="font-size: medium" onclick="MessageBox()">Реставрация фотографий </a></li>
-            <li><a href="#" style="font-size: medium" onclick="MessageBox()">Печать на сувенирах</a></li>
+            <li><a class="a-class" href="#" style="font-size: medium">Печать фотографий</a></li>
+            <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Реставрация фотографий </a></li>
+            <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Печать на сувенирах</a></li>
         </ul>
     </li>
-    <li><a href="#" onclick="MessageBox()">Оплата и доставка</a></li>
-    <li><a href="#" onclick="MessageBox()">Контакты</a></li>
+    <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
+    <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
     <li style="float: right" >
-         <a id="openD" href="#">Войти</a>
+         <a class="${userLogin != null ? 'hide': 'a-class'}" id="openD" href="#">Войти</a>
     </li>
+    <li style="float: right" >
+        <a id="exit" class="${userLogin == null ? 'hide': 'a-class'}" onclick="document.forms['logoutForm'].submit()" href="#">Выйти</a>
+    </li>
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
 </ul>
 
+
+<script defer>
+    openDialog(${error})
+</script>
 <div id="dialog" title="Авторизация">
-    <form method="post" action="">
-        <span >e-mail</span>: 
-        <input name="login" type="text" size="10"><br>
-        <span> Пароль</span>: 
-        <input name="pass" type="password" size="8">
-        <br>
-        <input type="submit" name="Submit" value="Войти">
+    <form method="POST" action="${contextPath}/login" class="form-signin">
+        <div class="form-group ${error != null ? 'has-error' : ''}">
+            <span>${message}</span>
+            <input name="username" type="text" placeholder="Имя пользователя"
+                   autofocus="true" required/>
+            <input style="margin-top: 10px" name="password" type="password" placeholder="Пароль" required/>
+            <span style="color: red; font-size: 14px;margin-top: 10px">${error}</span>
+            <br>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+            <button type="submit" class="button" style="color:white; background-color:#819A32;width: 100%; margin-top: 20px"> Войти</button>
+            <h4 class="text-center"><a href="${contextPath}/registration">Создать учетную запись</a></h4>
+        </div>
     </form>
 </div>
 

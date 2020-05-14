@@ -87,7 +87,7 @@ button:hover:not(.active) {
     width: 100%; /*задаем высоту*/
 }
 
-a {
+.a-class {
     text-decoration: none; /*убираем подчеркивание текста ссылок*/
     background: #819A32; /*добавляем фон к пункту меню*/
     color: #fff; /*меняем цвет ссылок*/
@@ -166,7 +166,14 @@ h2 span {
     font-size: 15pt;
     color: white;
 }
-.ui-widget-overlay {
-    opacity: .0!important;
-    filter: Alpha(Opacity=0) !important;
+.ui-widget-overlay{
+    background:#000;
+    opacity:0.5;
+    -moz-opacity:0.5;
+    filter:alpha(opacity=50);
+    left:0;position:fixed;
+    top:0;
+}
+.hide {
+    display: none;
 }

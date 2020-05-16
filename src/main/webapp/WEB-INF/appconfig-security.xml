@@ -12,6 +12,9 @@
     <http auto-config="true">
         <intercept-url pattern="/"/>
         <intercept-url pattern="/start"/>
+        <intercept-url pattern="/orderPrint" access="hasAnyRole('ROLE_USER','ADMIN')"/>
+        <intercept-url pattern="/upload" access="hasAnyRole('ROLE_USER','ADMIN')"/>
+        <intercept-url pattern="/users" access="hasAnyRole('ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/start" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
@@ -25,6 +28,7 @@
         </authentication-provider>
     </authentication-manager>
 
+
     <beans:bean id="userDetailsServiceImpl"
                 class="com.photo.service.UserDetailsServiceImpl"></beans:bean>
 
@@ -32,4 +36,5 @@
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>
+
 </beans:beans>

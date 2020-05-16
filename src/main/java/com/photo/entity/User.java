@@ -1,6 +1,7 @@
 package com.photo.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Simple JavaBean domain object that represents a User.
@@ -25,8 +26,63 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "patronymic")
+    private String patronymic;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @ManyToMany(mappedBy = "usersField")
+    private List<Order> order;
+
     @Transient
     private String confirmPassword;
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public User(){}
 

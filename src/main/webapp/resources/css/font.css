@@ -6,14 +6,13 @@ body {
     color: #ffffff;
 }
 
-textarea {
-    min-width: 550px;
-    background: #fce9c0;
-    border: 2px solid #a9c358;
+.textarea {
+    width: 400px;
+    background: #f2f2f2;
+    border: 2px solid black;
     padding: 10px;
-    width: 90%;
     border-radius: 5px;
-    height: 400px;
+    height: 300px;
     font-size: 14px;
     resize: none;
 }
@@ -158,11 +157,12 @@ h2 span {
     top: 300px;
     left: 800px;
     padding: 5px 15px;
+    text-decoration: none; /*убираем подчеркивание текста ссылок*/
     background: red;
     border: 0 none;
     cursor: pointer;
     -webkit-border-radius: 5px;
-    border-radius: 1px;
+    border-radius: 5px;
     font-size: 15pt;
     color: white;
 }

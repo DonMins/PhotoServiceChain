@@ -11,6 +11,10 @@
     <link href="${contextPath}/resources/css/font.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
     <meta id="_csrf_token" value="${_csrf.token}"/>
+    <script>
+        var orderPrint = "${contextPath}/orderPrint";
+        var NowUser = "${pageContext.request.userPrincipal.name}"
+    </script>
 
     <script src="${contextPath}/resources/js/app-ajax.js" type="text/javascript"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -61,7 +65,7 @@
     </script>
 </head>
 
-<body onload=openDialog(${error.length()});OpenRegistration(${errorReg.length()})>
+<body onload=openDialog(${error.length()});openDialog(${success.length()});OpenRegistration(${errorReg.length()})>
 <%--<ul>--%>
 <%--    --%>
 <%--    <li><button id ="inwork" onclick="MessageBox()" >О Компании</button></li>--%>
@@ -82,10 +86,10 @@
 <%--</ul>--%>
 
 <ul class="ul-class">
-    <li><a class="a-class" href="#">Главная</a></li>
+    <li><a class="a-class" href="${contextPath}/start">Главная</a></li>
     <li><a class="a-class" href="#">Услуги</a>
         <ul class="ul-class">
-            <li><a class="a-class" href="#" style="font-size: medium">Печать фотографий</a></li>
+            <li><a class="a-class" href="javascript:orderBox()" style="font-size: medium">Печать фотографий</a></li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Реставрация фотографий </a>
             </li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Печать на сувенирах</a>
@@ -94,22 +98,23 @@
     </li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
+    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a></li>
     <li style="float: right">
-        <a class="${userLogin != null ? 'hide': 'a-class'}" id="openD" href="#">
+        <a class="${pageContext.request.userPrincipal.name != null ? 'hide': 'a-class'}" id="openD" href="#">
             <img src="${contextPath}/resources/css/closed_door1.png" alt="л"
                  style="width: 25px;height: 25px;vertical-align: text-top;">Войти
         </a>
     </li>
 
     <li style="float: right">
-        <a id="exit" class="${userLogin == null ? 'hide': 'a-class'}" onclick="document.forms['logoutForm'].submit()"
+        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" onclick="document.forms['logoutForm'].submit()"
            href="#">
             <img src="${contextPath}/resources/css/open_door1.png" alt="л"
                  style="width: 25px;height: 25px;vertical-align: text-top;">Выйти
         </a>
     </li>
     <li style="float: right">
-        <p class="${userLogin == null ? 'hide': 'userInput'}">
+        <p class="${pageContext.request.userPrincipal.name == null ? 'hide': 'userInput'}">
             <img src="${contextPath}/resources/css/man1.png" alt="man"
                  style="width: 20px;height: 20px;vertical-align: middle;">
             Вы вошли как: ${pageContext.request.userPrincipal.name}</p>
@@ -145,6 +150,11 @@
             <input name="username" type="text" placeholder="Имя пользователя" autofocus="true" required/>
             <span id="username-error" style="color: red; font-size: 14px;margin-top: 10px">${username}</span>
 
+            <input style="margin-top: 10px" name="surname" type="text" placeholder="Фамилия" required/>
+            <input style="margin-top: 10px" name="name" type="text" placeholder="Имя" required/>
+            <input style="margin-top: 10px" name="patronymic" type="text" placeholder="Отчество" required/>
+            <input style="margin-top: 10px" name="phone" type="tel" placeholder="Телефон" required/>
+
             <input style="margin-top: 10px" name="email" type="email" placeholder="Email" required/>
             <span id="email-error" style="color: red; font-size: 14px;margin-top: 10px">${email}</span>
 
@@ -178,7 +188,7 @@
             <li style="font-size: 15px; color: black">7 фотоцентров в Самаре</li>
         </ul>
     </div>
-    <button class="order"> Заказать печать</button>
+    <button class="order" onclick="orderBox()"> Заказать печать</button>
 </div>
 </div>
 </body>

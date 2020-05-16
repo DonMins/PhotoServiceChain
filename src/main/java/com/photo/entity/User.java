@@ -38,7 +38,7 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToMany(mappedBy = "usersField")
+    @OneToMany(mappedBy = "usersField", cascade = CascadeType.ALL)
     private List<Order> order;
 
     @Transient
@@ -84,7 +84,8 @@ public class User {
         this.phone = phone;
     }
 
-    public User(){}
+    public User() {
+    }
 
     public Long getId() {
         return id;

@@ -66,6 +66,8 @@
     <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
     <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a>
+    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a></li>
+
     </li>
     <li style="float: right">
         <a class="${pageContext.request.userPrincipal.name != null ? 'hide': 'a-class'}" id="openD" href="#">
@@ -102,19 +104,19 @@ margin-top: 15px;  border-radius: 5px;" method="post" enctype="multipart/form-da
                 <h style="color: black">Оформление заказа</h>
                 <br>
                 <input style="margin-top: 30px;width: 400px;border: 1px solid black;" name="surname" type="text"
-                       placeholder="Фамилия" autofocus="true" required value="${surname}"/> <br>
+                       placeholder="Фамилия" autofocus="true" required  readonly value="${surname}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px;border: 1px solid black;" name="name" type="text"
-                       placeholder="Имя" required value="${name}"/> <br>
+                       placeholder="Имя" required  readonly value="${name}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px;border: 1px solid black;" name="patronymic" type="text"
-                       placeholder="Отчество" required value="${patronymic}"/> <br>
+                       placeholder="Отчество" required  readonly value="${patronymic}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px;border: 1px solid black;" name="email" type="email"
-                       placeholder="Email" required value="${email}"/> <br>
+                       placeholder="Email" required  readonly value="${email}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px; border: 1px solid black" name="phone" type="tel"
-                       placeholder="Телефон" required value="${phone}"/> <br>
+                       placeholder="Телефон" readonly required value="${phone}"/> <br>
 
                 <select onchange="changeSize()" style="margin-top: 10px;width: 400px; border: 1px solid black"
                                               id="select" name="sizePhoto">

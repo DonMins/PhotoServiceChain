@@ -1,21 +1,24 @@
 package com.photo.controllers;
 
+import com.photo.entity.Order;
 import com.photo.entity.User;
+import com.photo.service.OrderService;
 import com.photo.service.SecurityService;
 import com.photo.service.UserService;
 import com.photo.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 /**
  * @author Zdornov Maxim
@@ -33,7 +36,7 @@ public class UserController {
     private UserValidator userValidator;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private OrderService orderService;
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -92,6 +95,22 @@ public class UserController {
         return "users";
     }
 
+    @RequestMapping(value = "/allOrder")
+    public String allOrder(Model model) {
+        List<Order> orderList;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(auth.getName());
+        if (user.getName().equals("admin")){
+             orderList = orderService.findAll();
+        } else {
+            orderList = orderService.findByUser(user);
+        }
+
+        model.addAttribute("order", orderList);
+
+        return "allOrder";
+    }
+
     @RequestMapping(value = "/orderPrint")
     public String orderPrint(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -115,13 +134,14 @@ public class UserController {
         if (!downloadDirectory.exists()) {
             downloadDirectory.mkdir();
         }
+        List<String> fileLink = new ArrayList<>();
         file.forEach(x -> {
             if (!x.isEmpty()) {
                 byte[] bytes = new byte[0];
                 try {
                     bytes = x.getBytes();
-
                     FileOutputStream writer = new FileOutputStream("C:\\USERS_PHOTO\\" + userForm.getEmail() + x.getOriginalFilename(), false);
+                    fileLink.add(userForm.getEmail() + x.getOriginalFilename() + '\n');
                     writer.write(bytes);
                     writer.close();
                 } catch (IOException e) {
@@ -129,6 +149,10 @@ public class UserController {
                 }
             }
         });
+        String result = String.join(", ", fileLink);
+        User user = userService.findByEmail(userForm.getEmail());
+        Order order = new Order(user, typePhoto, sizePhoto, total, comment, result, "В работе");
+        orderService.save(order);
         return "redirect:/start";
     }
 

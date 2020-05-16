@@ -15,11 +15,12 @@
     <link href="${contextPath}/resources/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"/>
     <script src="${contextPath}/resources/js/jquery-1.8.3.js" type="text/javascript"></script>
     <script src="${contextPath}/resources/js/jquery-ui-1.9.2.custom.min.js" type="text/javascript"></script>
-    <title>Пользователи</title>
+    <title>Все заказы</title>
     <style>
         .table_dark {
             font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
             font-size: 14px;
+            max-width: 100%;
             width: 100%;
             text-align: center;
             border-collapse: collapse;
@@ -101,18 +102,30 @@
             <th scope="col">Отчество</th>
             <th scope="col">Телефон</th>
             <th scope="col">Email</th>
+            <th scope="col">Размер</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Названия</th>
+            <th scope="col">Комментарий</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Статус</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${users}" var="item" varStatus="status">
+        <c:forEach items="${order}" var="item" varStatus="status">
             <tr>
                 <th scope="row">${status.index+1}</th>
-                <td>${item.username}</td>
-                <td>${item.surname}</td>
-                <td>${item.name}</td>
-                <td>${item.patronymic}</td>
-                <td>${item.phone}</td>
-                <td>${item.email}</td>
+                <td>${item.users.username}</td>
+                <td>${item.users.surname}</td>
+                <td>${item.users.name}</td>
+                <td>${item.users.patronymic}</td>
+                <td>${item.users.phone}</td>
+                <td>${item.users.email}</td>
+                <td>${item.sizePhoto}</td>
+                <td>${item.typePhoto}</td>
+                <td>${item.linkOnPhoto}</td>
+                <td>${item.comment}</td>
+                <td>${item.total}</td>
+                <td>${item.isStatus()}</td>
             </tr>
         </c:forEach>
         </tbody>

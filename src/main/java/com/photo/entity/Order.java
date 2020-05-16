@@ -20,13 +20,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "ORDER_USERS",
-            joinColumns = { @JoinColumn(name = "id_user") },
-            inverseJoinColumns = { @JoinColumn(name = "id_order") }
-    )
-    private List<User> usersField;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User usersField;
 
     @Column(name = "typePhoto")
     private String typePhoto;
@@ -44,15 +39,26 @@ public class Order {
     private String linkOnPhoto;
 
     @Column(name = "status")
-    private boolean status;
+    private String status;
 
     public Order(){}
 
-    public List<User> getUsers() {
+    public Order(User usersField, String typePhoto, String sizePhoto,
+                 String total, String comment, String linkOnPhoto, String status) {
+        this.usersField = usersField;
+        this.typePhoto = typePhoto;
+        this.sizePhoto = sizePhoto;
+        this.total = total;
+        this.comment = comment;
+        this.linkOnPhoto = linkOnPhoto;
+        this.status = status;
+    }
+
+    public User getUsers() {
         return usersField;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(User users) {
         this.usersField = users;
     }
 
@@ -104,11 +110,11 @@ public class Order {
         this.linkOnPhoto = linkOnPhoto;
     }
 
-    public boolean isStatus() {
+    public String isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

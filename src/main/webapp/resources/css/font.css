@@ -3,6 +3,7 @@ body {
     font-size: 18pt;
     text-align: center;
     background-image: url("font.jpg");
+    width: 100%;
     color: #ffffff;
 }
 
@@ -83,7 +84,7 @@ button:hover:not(.active) {
     margin-top: 25px; /*делаем отступ сверху*/
     background: #819A32; /*добавляем фон всему меню*/
     height: 50px; /*задаем высоту*/
-    width: 100%; /*задаем высоту*/
+    width: 100%; /*задаем ширину*/
 }
 
 .a-class {

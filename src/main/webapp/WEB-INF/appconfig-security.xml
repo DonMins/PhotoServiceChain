@@ -13,6 +13,7 @@
         <intercept-url pattern="/"/>
         <intercept-url pattern="/start"/>
         <intercept-url pattern="/orderPrint" access="hasAnyRole('ROLE_USER','ADMIN')"/>
+        <intercept-url pattern="/updateStatus" access="hasAnyRole('ROLE_USER','ADMIN')"/>
         <intercept-url pattern="/upload" access="hasAnyRole('ROLE_USER','ADMIN')"/>
         <intercept-url pattern="/users" access="hasAnyRole('ADMIN')"/>
 

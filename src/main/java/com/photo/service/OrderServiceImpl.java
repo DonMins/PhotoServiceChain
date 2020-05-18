@@ -28,6 +28,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order findById(Long id) {
+        return orderDao.findById(id);
+    }
+
+    @Override
     public List<Order> findAll() {
         return orderDao.findAll();
     }

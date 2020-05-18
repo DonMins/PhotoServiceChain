@@ -71,3 +71,20 @@ function changeSize() {
         document.getElementById('totalHidden').value = (price * len).toFixed(2) + " Руб.";
     }
 }
+function onChangeStatus(id,status) {
+    var json = {};
+    json["id"]= id;
+    json["status"]= status;
+        $.ajax({
+            url: updateStatus,
+            type: "POST",
+            data: { id: id, status: status }, // parameters
+            headers: {
+                "X-CSRF-TOKEN": $('#_csrf_token').attr('value')
+            },
+            success: function (responseText) {
+                location.reload(); // перезагружаем страницу
+            },
+
+        });
+}

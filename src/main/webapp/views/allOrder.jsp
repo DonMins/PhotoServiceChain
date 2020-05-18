@@ -9,7 +9,9 @@
     <link href="${contextPath}/resources/css/font.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
     <meta id="_csrf_token" value="${_csrf.token}"/>
-
+    <script>
+        var updateStatus = "${contextPath}/updateStatus";
+    </script>
     <script src="${contextPath}/resources/js/app-ajax.js" type="text/javascript"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="${contextPath}/resources/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"/>
@@ -21,7 +23,6 @@
             font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
             font-size: 14px;
             max-width: 100%;
-            width: 100%;
             text-align: center;
             border-collapse: collapse;
             background: #252F48;
@@ -30,13 +31,11 @@
         .table_dark th {
             color: #EDB749;
             border-bottom: 1px solid #37B5A5;
-            padding: 12px 17px;
         }
         .table_dark td {
             color: #CAD4D6;
             border-bottom: 1px solid #37B5A5;
             border-right:1px solid #37B5A5;
-            padding: 7px 17px;
         }
         .table_dark tr:last-child td {
             border-bottom: none;
@@ -108,6 +107,7 @@
             <th scope="col">Комментарий</th>
             <th scope="col">Сумма</th>
             <th scope="col">Статус</th>
+            <th class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': ''}" scope="col">Изменить статус</th>
         </tr>
         </thead>
         <tbody>
@@ -126,6 +126,14 @@
                 <td>${item.comment}</td>
                 <td>${item.total}</td>
                 <td>${item.isStatus()}</td>
+               <td class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': ''}"> <select onchange="onChangeStatus(${item.id},this.value)"
+                        id="changeStatus" name="sizePhoto">
+                    <option disabled selected>Новый статус</option>
+                    <option value="В работе">В работе</option>
+                    <option value="Отменен">Отменен</option>
+                    <option value="Завершен">Завершен</option>
+               </select></td>
+<%--                <td  style="color: red" onclick="onChangeStatus(${item.id})">Изменить</td>--%>
             </tr>
         </c:forEach>
         </tbody>

@@ -7,6 +7,7 @@ import com.photo.service.SecurityService;
 import com.photo.service.UserService;
 import com.photo.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -63,12 +64,10 @@ public class UserController {
     public String login(Model model, String error, String logout) {
         if (error != null) {
             model.addAttribute("error", "Имя пользователя или пароль неверны");
-        }
-        else if (logout != null) {
+        } else if (logout != null) {
             model.addAttribute("message", "Вышли успешно");
             return "redirect:/start";
-        }
-        else {
+        } else {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.findByUsername(auth.getName());
             model.addAttribute("userLogin", user.getUsername());
@@ -80,7 +79,7 @@ public class UserController {
     public String startPage(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(auth.getName());
-        if (user!=null){
+        if (user != null) {
             model.addAttribute("userLogin", user.getUsername());
         }
         return "start";
@@ -100,8 +99,8 @@ public class UserController {
         List<Order> orderList;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByUsername(auth.getName());
-        if (user.getName().equals("admin")){
-             orderList = orderService.findAll();
+        if (user.getName().equals("admin")) {
+            orderList = orderService.findAll();
         } else {
             orderList = orderService.findByUser(user);
         }
@@ -153,7 +152,16 @@ public class UserController {
         User user = userService.findByEmail(userForm.getEmail());
         Order order = new Order(user, typePhoto, sizePhoto, total, comment, result, "В работе");
         orderService.save(order);
-        return "redirect:/start";
+        return "redirect:/allOrder";
     }
 
+    @RequestMapping(value = "/updateStatus",
+            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Integer updateStatus(@RequestParam(value = "id") Long id,
+                                @RequestParam(value = "status") String status) {
+        Order order = orderService.findById(id);
+        order.setStatus(status);
+        orderService.save(order);
+        return 1;
+    }
 }

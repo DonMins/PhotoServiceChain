@@ -32,9 +32,9 @@
                 minWidth: 300,
                 resizable: false,
                 draggable: false,
-                close:function(){
-                   var error = document.getElementById("error-span");
-                   error.hidden = true;
+                close: function () {
+                    var error = document.getElementById("error-span");
+                    error.hidden = true;
                 }
 
             });
@@ -50,7 +50,7 @@
                 minWidth: 300,
                 resizable: false,
                 draggable: false,
-                close:function(){
+                close: function () {
                     document.getElementById("username-error").hidden = true;
                     document.getElementById("password-error").hidden = true;
                     document.getElementById("email-error").hidden = true;
@@ -66,25 +66,6 @@
 </head>
 
 <body onload=openDialog(${error.length()});openDialog(${success.length()});OpenRegistration(${errorReg.length()})>
-<%--<ul>--%>
-<%--    --%>
-<%--    <li><button id ="inwork" onclick="MessageBox()" >О Компании</button></li>--%>
-<%--    <li><a onclick="MessageBox()">Оплата и доставка</a></li>--%>
-<%--    <li><a onclick="MessageBox()">Новости</a></li>--%>
-<%--    <li><a onclick="MessageBox()">Техподдержка</a></li>--%>
-<%--    <button style="float:right" class="button" type="submit" onclick="document.forms['logoutForm'].submit()">Выйти--%>
-<%--    </button>--%>
-
-
-<%--    <c:if test="${pageContext.request.userPrincipal.name != null}">--%>
-<%--    <form id="logoutForm" method="POST" action="${contextPath}/logout">--%>
-<%--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--    </form>--%>
-<%--    <p class="userInput"> Вы вошли как: ${pageContext.request.userPrincipal.name}--%>
-<%--        </c:if>--%>
-
-<%--</ul>--%>
-
 <ul class="ul-class">
     <li><a class="a-class" href="${contextPath}/start">Главная</a></li>
     <li><a class="a-class" href="#">Услуги</a>
@@ -98,8 +79,10 @@
     </li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
-    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a></li>
-    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a></li>
+    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a>
+    </li>
+    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a>
+    </li>
 
     <li style="float: right">
         <a class="${pageContext.request.userPrincipal.name != null ? 'hide': 'a-class'}" id="openD" href="#">
@@ -109,7 +92,8 @@
     </li>
 
     <li style="float: right">
-        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" onclick="document.forms['logoutForm'].submit()"
+        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}"
+           onclick="document.forms['logoutForm'].submit()"
            href="#">
             <img src="${contextPath}/resources/css/open_door1.png" alt="л"
                  style="width: 25px;height: 25px;vertical-align: text-top;">Выйти
@@ -163,8 +147,10 @@
             <input style="margin-top: 10px" name="password" type="password" placeholder="Пароль" required/>
             <span id="password-error" style="color: red; font-size: 14px;margin-top: 10px">${password}</span>
 
-            <input style="margin-top: 10px" name="confirmPassword" type="password" placeholder="Повторить пароль" required/>
-            <span id="confirmPassword-error" style="color: red; font-size: 14px;margin-top: 10px">${confirmPassword}</span>
+            <input style="margin-top: 10px" name="confirmPassword" type="password" placeholder="Повторить пароль"
+                   required/>
+            <span id="confirmPassword-error"
+                  style="color: red; font-size: 14px;margin-top: 10px">${confirmPassword}</span>
 
             <br>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Controller
-public class UserController {
+public class MainController {
     @Autowired
     private UserService userService;
 
@@ -155,9 +155,9 @@ public class UserController {
         return "redirect:/allOrder";
     }
 
-    @RequestMapping(value = "/updateStatus",
-            method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Integer updateStatus(@RequestParam(value = "id") Long id,
+    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Integer updateStatus(@RequestParam(value = "id") Long id,
                                 @RequestParam(value = "status") String status) {
         Order order = orderService.findById(id);
         order.setStatus(status);

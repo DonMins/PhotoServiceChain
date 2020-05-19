@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page contentType="text/html;charset=UTF-8" language="java"%>
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
@@ -11,6 +11,8 @@
     <meta id="_csrf_token" value="${_csrf.token}"/>
     <script>
         var updateStatus = "${contextPath}/updateStatus";
+        var NowUser = "${pageContext.request.userPrincipal.name}"
+
     </script>
     <script src="${contextPath}/resources/js/app-ajax.js" type="text/javascript"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -28,21 +30,26 @@
             background: #252F48;
             margin-top: 10px;
         }
+
         .table_dark th {
             color: #EDB749;
             border-bottom: 1px solid #37B5A5;
         }
+
         .table_dark td {
             color: #CAD4D6;
             border-bottom: 1px solid #37B5A5;
-            border-right:1px solid #37B5A5;
+            border-right: 1px solid #37B5A5;
         }
+
         .table_dark tr:last-child td {
             border-bottom: none;
         }
+
         .table_dark td:last-child {
             border-right: none;
         }
+
         .table_dark tr:hover td {
             text-decoration: underline;
         }
@@ -53,7 +60,7 @@
     <li><a class="a-class" href="${contextPath}/start">Главная</a></li>
     <li><a class="a-class" href="#">Услуги</a>
         <ul class="ul-class">
-            <li><a class="a-class" href="#" style="font-size: medium">Печать фотографий</a></li>
+            <li><a class="a-class" href="javascript:orderBox()" style="font-size: medium">Печать фотографий</a></li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Реставрация фотографий </a>
             </li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Печать на сувенирах</a>
@@ -62,8 +69,10 @@
     </li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
-    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a></li>
-    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a></li>
+    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a>
+    </li>
+    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a>
+    </li>
 
     <li style="float: right">
         <a class="${pageContext.request.userPrincipal.name != null ? 'hide': 'a-class'}" id="openD" href="#">
@@ -73,7 +82,8 @@
     </li>
 
     <li style="float: right">
-        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" onclick="document.forms['logoutForm'].submit()"
+        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}"
+           onclick="document.forms['logoutForm'].submit()"
            href="#">
             <img src="${contextPath}/resources/css/open_door1.png" alt="л"
                  style="width: 25px;height: 25px;vertical-align: text-top;">Выйти
@@ -107,7 +117,8 @@
             <th scope="col">Комментарий</th>
             <th scope="col">Сумма</th>
             <th scope="col">Статус</th>
-            <th class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': ''}" scope="col">Изменить статус</th>
+            <th class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': ''}" scope="col">Изменить статус
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -126,14 +137,15 @@
                 <td>${item.comment}</td>
                 <td>${item.total}</td>
                 <td>${item.isStatus()}</td>
-               <td class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': ''}"> <select onchange="onChangeStatus(${item.id},this.value)"
+                <td class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': ''}"><select
+                        onchange="onChangeStatus(${item.id},this.value)"
                         id="changeStatus" name="sizePhoto">
                     <option disabled selected>Новый статус</option>
                     <option value="В работе">В работе</option>
                     <option value="Отменен">Отменен</option>
                     <option value="Завершен">Завершен</option>
-               </select></td>
-<%--                <td  style="color: red" onclick="onChangeStatus(${item.id})">Изменить</td>--%>
+                </select></td>
+                    <%--                <td  style="color: red" onclick="onChangeStatus(${item.id})">Изменить</td>--%>
             </tr>
         </c:forEach>
         </tbody>

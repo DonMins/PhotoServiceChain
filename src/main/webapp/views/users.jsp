@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<%@page contentType="text/html;charset=UTF-8" language="java"%>
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
@@ -26,23 +26,28 @@
             background: #252F48;
             margin-top: 10px;
         }
+
         .table_dark th {
             color: #EDB749;
             border-bottom: 1px solid #37B5A5;
             padding: 12px 17px;
         }
+
         .table_dark td {
             color: #CAD4D6;
             border-bottom: 1px solid #37B5A5;
-            border-right:1px solid #37B5A5;
+            border-right: 1px solid #37B5A5;
             padding: 7px 17px;
         }
+
         .table_dark tr:last-child td {
             border-bottom: none;
         }
+
         .table_dark td:last-child {
             border-right: none;
         }
+
         .table_dark tr:hover td {
             text-decoration: underline;
         }
@@ -53,7 +58,7 @@
     <li><a class="a-class" href="${contextPath}/start">Главная</a></li>
     <li><a class="a-class" href="#">Услуги</a>
         <ul class="ul-class">
-            <li><a class="a-class" href="#" style="font-size: medium">Печать фотографий</a></li>
+            <li><a class="a-class" href="javascript:orderBox()" style="font-size: medium">Печать фотографий</a></li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Реставрация фотографий </a>
             </li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Печать на сувенирах</a>
@@ -62,8 +67,10 @@
     </li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
-    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a></li>
-    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a></li>
+    <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a>
+    </li>
+    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a>
+    </li>
 
     <li style="float: right">
         <a class="${pageContext.request.userPrincipal.name != null ? 'hide': 'a-class'}" id="openD" href="#">
@@ -73,7 +80,8 @@
     </li>
 
     <li style="float: right">
-        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" onclick="document.forms['logoutForm'].submit()"
+        <a id="exit" class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}"
+           onclick="document.forms['logoutForm'].submit()"
            href="#">
             <img src="${contextPath}/resources/css/open_door1.png" alt="л"
                  style="width: 25px;height: 25px;vertical-align: text-top;">Выйти

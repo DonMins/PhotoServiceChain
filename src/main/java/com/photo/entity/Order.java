@@ -41,7 +41,8 @@ public class Order {
     @Column(name = "status")
     private String status;
 
-    public Order(){}
+    public Order() {
+    }
 
     public Order(User usersField, String typePhoto, String sizePhoto,
                  String total, String comment, String linkOnPhoto, String status) {

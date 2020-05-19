@@ -9,7 +9,9 @@
     <link href="${contextPath}/resources/css/font.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/style.css" rel="stylesheet">
     <meta id="_csrf_token" value="${_csrf.token}"/>
-
+    <script>
+        var NowUser = "${pageContext.request.userPrincipal.name}"
+    </script>
     <script src="${contextPath}/resources/js/app-ajax.js" type="text/javascript"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="${contextPath}/resources/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"/>
@@ -56,7 +58,7 @@
     <li><a class="a-class" href="${contextPath}/start">Главная</a></li>
     <li><a class="a-class" href="#">Услуги</a>
         <ul class="ul-class">
-            <li><a class="a-class" href="#" style="font-size: medium">Печать фотографий</a></li>
+            <li><a class="a-class" href="javascript:orderBox()" style="font-size: medium">Печать фотографий</a></li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Реставрация фотографий </a>
             </li>
             <li><a class="a-class" href="#" style="font-size: medium" onclick="MessageBox()">Печать на сувенирах</a>
@@ -66,7 +68,8 @@
     <li><a class="a-class" href="#" onclick="MessageBox()">Оплата и доставка</a></li>
     <li><a class="a-class" href="#" onclick="MessageBox()">Контакты</a></li>
     <li><a class="${pageContext.request.userPrincipal.name != 'admin' ? 'hide': 'a-class'}" href="${contextPath}/users">Пользователи</a>
-    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a></li>
+    <li><a class="${pageContext.request.userPrincipal.name == null ? 'hide': 'a-class'}" href="${contextPath}/allOrder">Заказы</a>
+    </li>
 
     </li>
     <li style="float: right">
@@ -104,30 +107,31 @@ margin-top: 15px;  border-radius: 5px;" method="post" enctype="multipart/form-da
                 <h style="color: black">Оформление заказа</h>
                 <br>
                 <input style="margin-top: 30px;width: 400px;border: 1px solid black;" name="surname" type="text"
-                       placeholder="Фамилия" autofocus="true" required  readonly value="${surname}"/> <br>
+                       placeholder="Фамилия" autofocus="true" required readonly value="${surname}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px;border: 1px solid black;" name="name" type="text"
-                       placeholder="Имя" required  readonly value="${name}"/> <br>
+                       placeholder="Имя" required readonly value="${name}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px;border: 1px solid black;" name="patronymic" type="text"
-                       placeholder="Отчество" required  readonly value="${patronymic}"/> <br>
+                       placeholder="Отчество" required readonly value="${patronymic}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px;border: 1px solid black;" name="email" type="email"
-                       placeholder="Email" required  readonly value="${email}"/> <br>
+                       placeholder="Email" required readonly value="${email}"/> <br>
 
                 <input style="margin-top: 10px;width: 400px; border: 1px solid black" name="phone" type="tel"
                        placeholder="Телефон" readonly required value="${phone}"/> <br>
 
                 <select onchange="changeSize()" style="margin-top: 10px;width: 400px; border: 1px solid black"
-                                              id="select" name="sizePhoto">
-                <option disabled selected>Выберите размер фотографий для печати</option>
-                <option value="10Х15">10Х15</option>
-                <option value="15Х21">15Х21</option>
-                <option value="21Х30">21Х30</option>
-                <option value="30Х42">30Х42</option>
-            </select>
+                        id="select" name="sizePhoto">
+                    <option disabled selected>Выберите размер фотографий для печати</option>
+                    <option value="10Х15">10Х15</option>
+                    <option value="15Х21">15Х21</option>
+                    <option value="21Х30">21Х30</option>
+                    <option value="30Х42">30Х42</option>
+                </select>
 
-                <select name="typePhoto" onchange="changeSize()" style="margin-top: 10px;width: 400px; border: 1px solid black"
+                <select name="typePhoto" onchange="changeSize()"
+                        style="margin-top: 10px;width: 400px; border: 1px solid black"
                         id="select2">
                     <option disabled selected>Выберите тип фотографий для печати</option>
                     <option value="Глянцевая">Глянцевая</option>
@@ -149,9 +153,11 @@ margin-top: 15px;  border-radius: 5px;" method="post" enctype="multipart/form-da
                         ИТОГО:
                     </label>
                     <output id="total" style="color: black; margin-top: 30px;width: 300px; " readonly></output>
-                    <input id="totalHidden" name="total" style="color: black; margin-top: 30px;width: 300px;" hidden></input>
+                    <input id="totalHidden" name="total" style="color: black; margin-top: 30px;width: 300px;"
+                           hidden></input>
                     <input style="margin-left: 20px; background: red; border: 0 none;  cursor: pointer; -webkit-border-radius: 5px;
-                        border-radius: 5px;   font-size: 15pt;   color: white;" type="submit" value="Отправить на печать">
+                        border-radius: 5px;   font-size: 15pt;   color: white;" type="submit"
+                           value="Отправить на печать">
 
             </form>
         </th>
@@ -160,7 +166,7 @@ margin-top: 15px;  border-radius: 5px;" method="post" enctype="multipart/form-da
                 <table class="table_dark" border="1">
                     <thead>
                     <tr>
-                        <th scope="col">Размер фотографии,см </th>
+                        <th scope="col">Размер фотографии,см</th>
                         <th scope="col">от 1 шт. (Глянцевая)</th>
                     </tr>
                     </thead>
@@ -189,7 +195,7 @@ margin-top: 15px;  border-radius: 5px;" method="post" enctype="multipart/form-da
                 <table class="table_dark" border="1">
                     <thead>
                     <tr>
-                        <th scope="col">Размер фотографии,см </th>
+                        <th scope="col">Размер фотографии,см</th>
                         <th scope="col">от 1 шт. (Матовая)</th>
                     </tr>
                     </thead>

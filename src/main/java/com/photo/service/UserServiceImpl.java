@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
 /**
  * UserServiceImpl implements UserService
  *
@@ -28,13 +27,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    /**
-     *
-     To save the user in the database, we also fill in the columns in the "ratings" table with
-     zeros and the empty history in the "history" table
-     * @param user of class User
-     */
 
     @Override
     public void save(User user) {

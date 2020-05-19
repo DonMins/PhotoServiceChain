@@ -15,6 +15,7 @@
         <intercept-url pattern="/orderPrint" access="hasAnyRole('ROLE_USER','ADMIN')"/>
         <intercept-url pattern="/updateStatus" access="hasAnyRole('ROLE_USER','ADMIN')"/>
         <intercept-url pattern="/upload" access="hasAnyRole('ROLE_USER','ADMIN')"/>
+        <intercept-url pattern="/allOrder" access="hasAnyRole('ROLE_USER','ADMIN')"/>
         <intercept-url pattern="/users" access="hasAnyRole('ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/start" authentication-failure-url="/login?error"

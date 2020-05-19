@@ -1,4 +1,5 @@
 package com.photo.service;
+
 import com.photo.entity.User;
 
 import java.util.List;
@@ -12,7 +13,10 @@ import java.util.List;
 
 public interface UserService {
     void save(User user);
+
     User findByUsername(String username);
+
     User findByEmail(String email);
+
     List<User> findAll();
 }

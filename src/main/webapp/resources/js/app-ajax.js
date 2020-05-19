@@ -13,31 +13,33 @@ const glossyPrice = new Map([["10Х15", 7.9],
 function MessageBox() {
     return swal("Oops!", "Данная страница в разработке", "error");
 }
-function openDialog(error){
-    debugger;
+
+function openDialog(error) {
+debugger;
     if (error > 0) {
         $("#dialog").dialog("open");
     }
 
 }
-function OpenRegistration(errorReg){
-    debugger;
+
+function OpenRegistration(errorReg) {
+debugger;
     if (errorReg > 0) {
         $("#registration").dialog("open");
     }
 }
+
 function orderBox() {
-    if (NowUser === ""){
+    if (NowUser === "") {
         return swal("Oops!", "Для доступа к данной странице нужно авторизироваться", "error");
-    }
-    else {
-        window.location.href="orderPrint";
+    } else {
+        window.location.href = "orderPrint";
     }
 }
 
 function showInfo(file) {
     var len = file.files.length;
-    var text= "";
+    var text = "";
     for (let i = 0; i < len; i++) {
         text = text + ("Имя: " + file.files[i].name + "  Размер: " + file.files[i].size + " Байт " + '\n');
     }
@@ -56,11 +58,12 @@ function showInfo(file) {
 
     }
 }
+
 function changeSize() {
     let len = document.getElementById('photo').files.length;
     let sizePhoto = document.getElementById('select').value;
     let typePhoto = document.getElementById('select2').value;
-    if (len>0) {
+    if (len > 0) {
         var price = 0;
         if (typePhoto === 'Матовая') {
             price = mattePrice.get(sizePhoto)
@@ -71,20 +74,20 @@ function changeSize() {
         document.getElementById('totalHidden').value = (price * len).toFixed(2) + " Руб.";
     }
 }
-function onChangeStatus(id,status) {
-    var json = {};
-    json["id"]= id;
-    json["status"]= status;
-        $.ajax({
-            url: updateStatus,
-            type: "POST",
-            data: { id: id, status: status }, // parameters
-            headers: {
-                "X-CSRF-TOKEN": $('#_csrf_token').attr('value')
-            },
-            success: function (responseText) {
-                location.reload(); // перезагружаем страницу
-            },
 
-        });
+function onChangeStatus(id, status) {
+    var json = {};
+    json["id"] = id;
+    json["status"] = status;
+    $.ajax({
+        url: updateStatus,
+        type: "POST",
+        data: {id: id, status: status}, // parameters
+        headers: {
+            "X-CSRF-TOKEN": $('#_csrf_token').attr('value')
+        },
+        success: function (responseText) {
+            location.reload(); // перезагружаем страницу
+        },
+    });
 }
